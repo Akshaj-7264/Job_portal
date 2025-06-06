@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'style/login.css' %}">
+{% endblock %}
+
+{% block title %}Login | Job Portal{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="error">{{ form.non_field_errors }}</div>
+            {% endif %}
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                <div class="password-wrapper">
+                    {{ form.password }}
+                    <span class="toggle-password" onclick="togglePassword(this)">👁️</span>
+                </div>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <p class="auth-links">
+            Don’t have an account? <a href="{% url 'register' %}">Register here</a>.
+        </p>
+        <p class="auth-links">
+            Forgot Password? <a href="{% url 'password_reset' %}">Click here</a>.
+        </p>
+    </div>
+</div>
+
+<script>
+function togglePassword(icon) {
+    const input = icon.previousElementSibling;
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    icon.textContent = isPassword ? '🙈' : '👁️';
+}
+</script>
+{% endblock %}

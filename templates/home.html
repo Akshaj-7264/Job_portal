@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Home Page</title>
+    {% load static %}
+    <!-- Correct favicon usage -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+
+    <!-- Load static files -->
+    
+    <link rel="stylesheet" href="{% static 'style/home.css' %}">
+</head>
+<body>
+
+    <nav class="nav">
+        <h1 id="navbar-words">Job Portal</h1>
+    </nav>
+
+    <div class="center-box">
+        <h2 class="welcome">Welcome to the Job Portal</h2>
+
+        <div class="buttons">
+            <a href="{% url 'login' %}" class="btn">Login</a>
+            <a href="{% url 'register' %}" class="btn">Register</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        &copy; {% now "Y" %} Job Portal. All rights reserved.
+    </footer>
+
+</body>
+</html>

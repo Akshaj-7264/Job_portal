@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'style/job_detail.css' %}">
+{% endblock %}
+
+{% block title %}{{ job.title }} | Job Details{% endblock %}
+
+{% block content %}
+<div class="job-detail-container">
+    <div class="job-detail-card">
+        <h2 class="job-title">{{ job.title }}</h2>
+        <p><strong>Description:</strong> {{ job.description }}</p>
+        <p><strong>Company:</strong> {{ job.company }}</p>
+        <p><strong>Location:</strong> {{ job.location }}</p>
+        <p><strong>Salary:</strong> {{ job.salary|default:"Not specified" }}</p>
+        <p><strong>Posted By:</strong> {{ job.posted_by.username }}</p>
+        <p><strong>Posted On:</strong> {{ job.created_at|date:"F j, Y, g:i a" }}</p>
+
+        {% if user.is_authenticated and user.profile.user_type == "seeker" %}
+            <form action="{% url 'apply_to_job' job.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Apply for this Job</button>
+            </form>
+        {% endif %}
+        
+        {% if user.is_authenticated and user.profile.user_type == 'recruiter' and job.posted_by == user %}
+            <a href="{% url 'view_applicants' job.id %}" class="btn btn-small">👥 View Applications</a>
+        {% endif %}
+
+
+        <a href="{% url 'recruiter_dashboard' %}" class="back-link">← Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

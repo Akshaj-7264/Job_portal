@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'style/dashboard.css' %}">
+{% endblock %}
+
+{% block title %}Seeker Dashboard | Job Portal{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2 class="dashboard-title">Welcome, {{ user.username }} 👋</h2>
+
+    <div class="section">
+        <h3>Local Job Listings</h3>
+        {% if local_jobs %}
+            <div class="job-cards">
+                {% for job in local_jobs %}
+                    <div class="job-card">
+                        <h4>{{ job.title }}</h4>
+                        <p>{{ job.description|truncatewords:20 }}</p>
+                        <a href="{% url 'job_detail' job.pk %}" class="btn btn-small">View</a>
+                        <a href="{% url 'apply_to_job' job.id %}" class="btn btn-small">Apply</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No local jobs found.</p>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h3>Adzuna Job Suggestions</h3>
+        {% if adzuna_jobs %}
+            <div class="job-cards">
+                {% for job in adzuna_jobs %}
+                    <div class="job-card">
+                        <h4>{{ job.title }}</h4>
+                        <p>{{ job.description|truncatewords:20 }}</p>
+                        <a href="{{ job.redirect_url }}" class="btn btn-small" target="_blank">View</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No suggestions found from Adzuna.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

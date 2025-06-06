@@ -1,0 +1,72 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+db.sqlite3
+
+# Media and file uploads
+/media/
+/uploads/
+
+# Static files (can be rebuilt)
+staticfiles/
+static_root/
+
+# Local environment
+.env
+*.env
+*.venv
+myenv/
+venv/
+ENV/
+env/
+.venv/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Pytest
+.cache/
+.pytest_cache/
+
+# Test coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Migrations
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# pip-tools
+*.lock
+
+# JetBrains (PyCharm)
+.idea/
+
+# Node/npm (if using for frontend assets)
+node_modules/
+npm-debug.log*
+
+# Build
+build/
+dist/
+*.egg-info/

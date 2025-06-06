@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Job Portal{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'style/base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+{% if show_navbar %}
+<nav class="nav">
+    <h1 id="navbar-words"><a href="{% url 'home' %}" style="text-decoration: none; color: inherit;">Job Portal</a></h1>
+    {% if user.is_authenticated %}
+        <div class="nav-links">
+            {% if user.profile.user_type == 'seeker' %}
+                <a href="{% url 'seeker_dashboard' %}" class="btn">Dashboard</a>
+            {% elif user.profile.user_type == 'recruiter' %}
+                <a href="{% url 'recruiter_dashboard' %}" class="btn">Dashboard</a>
+            {% endif %}
+            <a href="{% url 'logout' %}" class="btn">Logout</a>
+        </div>
+    {% else %}
+        <div class="nav-links">
+            <a href="{% url 'login' %}" class="btn">Login</a>
+            <a href="{% url 'register' %}" class="btn">Register</a>
+        </div>
+    {% endif %}
+</nav>
+{% endif %}
+
+
+
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    &copy; {% now "Y" %} Job Portal. All rights reserved.
+</footer>
+
+{% block scripts %}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

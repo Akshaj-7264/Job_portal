@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'style/dashboard.css' %}">
+{% endblock %}
+
+{% block title %}Applicants for {{ job.title }}{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Applicants for: {{ job.title }}</h2>
+
+    {% for app in applications %}
+        <div class="job-card">
+            <p><strong>Name:</strong> {{ app.name }}</p>
+            <p><strong>Email:</strong> {{ app.email }}</p>
+            <p><strong>Phone:</strong> {{ app.phone }}</p>
+            <p><strong>DOB:</strong> {{ app.dob }}</p>
+            <p><strong>Education:</strong> {{ app.get_education_display }}</p>
+            <p><strong>Experience:</strong> {{ app.get_experience_display }}</p>
+            <p><strong>Resume:</strong> <a href="{{ app.resume.url }}" target="_blank">Download</a></p>
+            <p><strong>Status:</strong> {{ app.status|title }}</p>
+
+            <form method="post" action="{% url 'update_application_status' app.id 'approve' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Approve</button>
+            </form>
+
+            <form method="post" action="{% url 'update_application_status' app.id 'reject' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Reject</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No applicants yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}
